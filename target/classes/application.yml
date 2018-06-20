@@ -1,0 +1,19 @@
+spring:
+  datasource:
+   type: com.alibaba.druid.pool.DruidDataSource
+   url: jdbc:mysql://192.168.100.159:3306/test_db?useUnicode=true
+   driver-class-name: com.mysql.jdbc.Driver
+   username: user
+   password: lichao123
+   
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      
+mybatis:
+  config-locations: mybatis/mybatis-config.xml
+  mapper-locations: mybatis/mapper/*.xml
+  type-aliases-package: com.ccitsoft.domian
+   

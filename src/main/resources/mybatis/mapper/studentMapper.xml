@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ccitsoft.mapper.StudentMapper">
+  <resultMap id="BaseResultMap" type="com.ccitsoft.domain.Student">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, name, sex 
+  </sql>
+  
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from student
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insert" parameterType="com.ccitsoft.domain.Student">
+    insert into student (id, name, sex)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR})
+  </insert>
+  
+  <update id="update" parameterType="com.ccitsoft.domain.Student">
+    update student
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="queryList" parameterType="com.ccitsoft.domain.Student" resultMap="BaseResultMap">
+  	SELECT 
+  	<include refid="Base_Column_List"></include> 
+  	FROM student
+    <where>
+        <if test="entity.name != null">
+            name LIKE CONCAT(CONCAT('%',#{entity.name},'%'))
+        </if>
+        <if test="entity.sex != null">
+            sex = #{entity.sex}
+        </if>
+     </where>
+     limit #{offset},#{pageSize}
+  </select>
+  
+  <select id="queryCount" parameterType="com.ccitsoft.domain.Student" resultType="java.lang.Long">
+  	SELECT count(1) FROM student
+    <where>
+        <if test="entity.name != null">
+            name like CONCAT ('%',${entity.name},'%')
+        </if>
+        <if test="entity.sex != null">
+            sex = #{entity.sex}
+        </if>
+     </where>
+  </select>
+  
+</mapper>

@@ -1,0 +1,13 @@
+spring:
+  datasource:
+   url: jdbc:mysql://bdm258130528.my3w.com:3306/bdm258130528_db?useUnicode=true
+   driver-class-name: com.mysql.jdbc.Driver
+   username: bdm258130528
+   password: lichao123
+   
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      
